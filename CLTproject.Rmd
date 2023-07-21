@@ -139,3 +139,28 @@ print(paste('mean = ', mean(my1000$k4),' sd = ',sd(my1000$k4)))
 The standard deviation is now a quarter of what it was before, which is now 10.2194198080463. The mean is still around 49.949875. 
 I expected the SD to be smaller than 10, but it was `r sd (my1000$k4).
 
+
+```{r}
+numb = 25
+Hdata = Homers_data[sample(1:1000,size=numb*1000, replace=T),"kkardashtemp"]
+mdata  <-matrix(Hdata,nrow=1000,ncol=numb)
+x.avg <- apply(mdata,1,mean)
+my1000$k5 = x.avg
+
+
+p <- ggplot(my1000, aes(x=k5),col=sex) + 
+  geom_density() +
+
+# Add mean line
+ geom_vline(aes(xintercept=mean(k5)),
+            color="blue", linetype="dashed", size=1)
+p + ggtitle("n = 25") +
+  xlab("temperature") + ylab(" density")
+
+print(paste('mean = ', mean(my1000$k5),' sd = ',sd(my1000$k5)))
+
+```
+
+
+In numb 25 I am noticing the SD is decreasing, but not as much as before. The new SD is 8.33994705960157, with the mean still being around 49.8944.
+We expect 8 and it was `r sd (my1000$k5).
