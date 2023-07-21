@@ -59,9 +59,6 @@ p
 print(paste('mean = ', mean(my1000$k2),' sd = ',sd(my1000$k2)))
 
 ```
-## We expect the sample mean to be close to population and the standev to get smaller by the ratio of one to the sample size. In this case 1/sqrt(2)
-
-### There are 3 peaks in the density plot. You pick two people you can get MM,MF.FM,or FF. these are all equally likey so the little peak on left is all the FF's while the little peak on the right is all the MM's so the big one in the middle is both the MF and FM in the same bag so-to-speak.  
 
 ```{r}
 numb = 4
@@ -84,9 +81,6 @@ print(paste('mean = ', mean(my1000$k4),' sd = ',sd(my1000$k4)))
 
 ```
 
-### In this case the stdev was cut in half because the sample size was four. This is what the central limit theorem says. There are also 5 peaks. They go from FFFF,to FFFM, to FFMM to FMMM and finally MMMM.
-
-# Now finish by adding blocks with numb being 9, then 16, 25, and 36. be sure to mention how the standard deviation progresses as the sample size changes,
 
 
 ```{r}
@@ -112,7 +106,7 @@ print(paste('mean = ', mean(my1000$k3),' sd = ',sd(my1000$k3)))
 
 Take the standard deviation and put it in the data that is from the central limit. The standard deviation shrinks as the number gets higher example 4 is divided by 2, 9 is divided by 3. 16 is divided by 4, and so on. The standard deviation is with n=9, 'r not '. The expected value is a lower standard deviation. The mean will always stay the same and the standard deviation will continue to shrink. This is an example of that. The original SD was 41.9769368490273, and the mean was 49.594. The current SD is 14.056796190328, and the mean is 49.895.
 
-We expect 14 and we get `r sd (my1000$k3).
+We expect 14 and we get `r sd(my1000$k3)`.
 
 ```{r}
 numb = 16
@@ -137,7 +131,7 @@ print(paste('mean = ', mean(my1000$k4),' sd = ',sd(my1000$k4)))
 
 
 The standard deviation is now a quarter of what it was before, which is now 10.2194198080463. The mean is still around 49.949875. 
-I expected the SD to be smaller than 10, but it was `r sd (my1000$k4).
+I expected the SD to be smaller than 10, but it was `r sd(my1000$k4)`.
 
 
 ```{r}
@@ -163,4 +157,30 @@ print(paste('mean = ', mean(my1000$k5),' sd = ',sd(my1000$k5)))
 
 
 In numb 25 I am noticing the SD is decreasing, but not as much as before. The new SD is 8.33994705960157, with the mean still being around 49.8944.
-We expect 8 and it was `r sd (my1000$k5).
+We expect 8 and it was `r sd(my1000$k5)`. 
+
+
+```{r}
+numb = 36
+Hdata = Homers_data[sample(1:1000,size=numb*1000, replace=T),"kkardashtemp"]
+mdata  <-matrix(Hdata,nrow=1000,ncol=numb)
+x.avg <- apply(mdata,1,mean)
+my1000$k6 = x.avg
+
+
+p <- ggplot(my1000, aes(x=k6),col=sex) + 
+  geom_density() +
+
+# Add mean line
+ geom_vline(aes(xintercept=mean(k6)),
+            color="blue", linetype="dashed", size=1)
+p + ggtitle("n = 36") +
+  xlab("temperature") + ylab(" density")
+
+print(paste('mean = ', mean(my1000$k6),' sd = ',sd(my1000$k6)))
+
+```
+
+
+The SD continues to shrink and the mean still stays the same. The mean is around 49.8716944444444, with the new SD being 6.98431983091458.
+We expect 6 and we got `r sd(my1000$k6)` My expected value was off by a little, it rounds up to 7 with the code.
