@@ -112,3 +112,30 @@ print(paste('mean = ', mean(my1000$k3),' sd = ',sd(my1000$k3)))
 
 Take the standard deviation and put it in the data that is from the central limit. The standard deviation shrinks as the number gets higher example 4 is divided by 2, 9 is divided by 3. 16 is divided by 4, and so on. The standard deviation is with n=9, 'r not '. The expected value is a lower standard deviation. The mean will always stay the same and the standard deviation will continue to shrink. This is an example of that. The original SD was 41.9769368490273, and the mean was 49.594. The current SD is 14.056796190328, and the mean is 49.895.
 
+We expect 14 and we get `r sd (my1000$k3).
+
+```{r}
+numb = 16
+Hdata = Homers_data[sample(1:1000,size=numb*1000, replace=T),"kkardashtemp"]
+mdata  <-matrix(Hdata,nrow=1000,ncol=numb)
+x.avg <- apply(mdata,1,mean)
+my1000$k4 = x.avg
+
+
+p <- ggplot(my1000, aes(x=k4),col=sex) + 
+  geom_density() +
+
+# Add mean line
+ geom_vline(aes(xintercept=mean(k4)),
+            color="blue", linetype="dashed", size=1)
+p + ggtitle("n = 16") +
+  xlab("temperature") + ylab(" density")
+
+print(paste('mean = ', mean(my1000$k4),' sd = ',sd(my1000$k4)))
+
+```
+
+
+The standard deviation is now a quarter of what it was before, which is now 10.2194198080463. The mean is still around 49.949875. 
+I expected the SD to be smaller than 10, but it was `r sd (my1000$k4).
+
